@@ -33,11 +33,13 @@ public class JdbcOfficerDao {
         return jdbcTemplate.query(FETCH_ALL_OFFICERS, new OfficerMapper());
     }
 
-    public Optional<Object> officerExistsById(int id) {
+    public boolean officerExistsById(int id) {
         try{
-            return Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID, new Object[] { id }, new OfficerMapper()));
+            Optional<Object> officer = Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID, new Object[] { id }, new OfficerMapper()));
+            return true;
         }catch(EmptyResultDataAccessException e){
-            return Optional.empty();
+            return false;
+            //return Optional.empty();
         }
 
     }
