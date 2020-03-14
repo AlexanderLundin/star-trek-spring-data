@@ -83,12 +83,13 @@ class JdbcOfficerDaoTest {
     @Test
     public void TestFindOfficerById() {
         //Setup
+        long id = 1L;
         //Exercise
-        Optional<Object> actual = jdbcOfficerDao.findOfficerById(1L);
-        Officer officer = (Officer)actual.get();
+        Optional<Object> actual = jdbcOfficerDao.findOfficerById(id);
         //Assert
         assertTrue(actual.isPresent());
-
+        Officer officer = (Officer)actual.get();
+        assertEquals(id, officer.getId());
         //Teardown
     }
 }
