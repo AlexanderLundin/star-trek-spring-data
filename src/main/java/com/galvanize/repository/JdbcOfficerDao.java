@@ -34,7 +34,7 @@ public class JdbcOfficerDao {
         return jdbcTemplate.query(FETCH_ALL_OFFICERS, new OfficerMapper());
     }
 
-    public boolean officerExistsById(int id) {
+    public boolean officerExistsById(long id) {
         try{
             Optional<Object> officer = Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID, new Object[] { id }, new OfficerMapper()));
             return true;
