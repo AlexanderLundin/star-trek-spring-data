@@ -14,7 +14,7 @@ class JdbcOfficerDaoTest {
     JdbcTemplate jdbcTemplate;
 
     @Test
-    public void TestTest1() {
+    public void TestConstructorDependencyInjection() {
         //Setup
         String expected = "";
         //Exercise
