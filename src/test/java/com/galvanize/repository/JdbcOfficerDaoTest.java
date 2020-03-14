@@ -105,4 +105,16 @@ class JdbcOfficerDaoTest {
         assertEquals(expected, actual);
         //Teardown
     }
+
+    @Test
+    public void TestDeleteOfficer() {
+        //Setup
+        //Exercise
+        long id = 1L;
+        jdbcOfficerDao.delete(id);
+        boolean actual = jdbcOfficerDao.officerExistsById(id);
+        //Assert
+        assertFalse(actual);
+        //Teardown
+    }
 }

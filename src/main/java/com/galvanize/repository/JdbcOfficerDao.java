@@ -21,11 +21,15 @@ public class JdbcOfficerDao {
 
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert insertOfficer;
+    private final Officer officer = new Officer();
 
     private final String COUNT_OFFICERS = "select count(*) from officers";
     private final String FETCH_ALL_OFFICERS = "select id, officer_rank, first_name, last_name from officers";
     private final String FETCH_OFFICER_BY_ID = "select * from officers where id = ?";
-    private final Officer officer = new Officer();
+    private final String DELETE_OFFICER_BY_ID = "delete from officers where id = ?";
+
+
+
 
     public JdbcOfficerDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
@@ -75,6 +79,12 @@ public class JdbcOfficerDao {
 
         return officer;
     }
+
+    public void delete(long id) {
+        jdbcTemplate.update(DELETE_OFFICER_BY_ID, id);
+    }
+
+
 }
 
 
