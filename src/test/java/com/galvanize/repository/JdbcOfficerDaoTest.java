@@ -107,10 +107,22 @@ class JdbcOfficerDaoTest {
     }
 
     @Test
-    public void TestDeleteOfficer() {
+    public void TestDeleteOfficerThatExists() {
         //Setup
         //Exercise
         long id = 1L;
+        jdbcOfficerDao.delete(id);
+        boolean actual = jdbcOfficerDao.officerExistsById(id);
+        //Assert
+        assertFalse(actual);
+        //Teardown
+    }
+
+    @Test
+    public void TestDeleteOfficerThatDoesNotExist() {
+        //Setup
+        //Exercise
+        long id = 0L;
         jdbcOfficerDao.delete(id);
         boolean actual = jdbcOfficerDao.officerExistsById(id);
         //Assert
