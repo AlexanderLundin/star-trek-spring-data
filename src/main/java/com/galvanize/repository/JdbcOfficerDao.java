@@ -6,17 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
 public class JdbcOfficerDao {
 
     private JdbcTemplate jdbcTemplate;
+    private SimpleJdbcInsert insertOfficer;
+
     private final String COUNT_OFFICERS = "select count(*) from officers";
     private final String FETCH_ALL_OFFICERS = "select id, officer_rank, first_name, last_name from officers";
     private final String FETCH_OFFICER_BY_ID = "select * from officers where id = ?";
@@ -24,6 +29,9 @@ public class JdbcOfficerDao {
 
     public JdbcOfficerDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
+        insertOfficer = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("officers")
+                .usingGeneratedKeyColumns("id");
     }
 
     public int countOfficers() {
@@ -56,6 +64,17 @@ public class JdbcOfficerDao {
 
     }
 
+    public Officer save(Officer officer) {
+        Map<String, Object> fields = new HashMap<>();
+        fields.put("officer_rank", officer.getRank());
+        fields.put("first_name", officer.getFirst());
+        fields.put("last_name", officer.getLast());
+
+        long id = insertOfficer.executeAndReturnKey(fields).longValue();
+        officer.setId(id);
+
+        return officer;
+    }
 }
 
 

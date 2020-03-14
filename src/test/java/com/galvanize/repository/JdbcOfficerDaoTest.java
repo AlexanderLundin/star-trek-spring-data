@@ -1,11 +1,13 @@
 package com.galvanize.repository;
 
 import com.galvanize.entities.Officer;
+import com.galvanize.entities.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import java.util.Arrays;
 import java.util.List;
@@ -90,6 +92,17 @@ class JdbcOfficerDaoTest {
         assertTrue(actual.isPresent());
         Officer officer = (Officer)actual.get();
         assertEquals(id, officer.getId());
+        //Teardown
+    }
+
+    @Test
+    public void TestSaveOfficerToDB() {
+        //Setup
+        Officer expected = new Officer(6L, Rank.COMMANDER, "Spock", "");
+        //Exercise
+        Officer actual = jdbcOfficerDao.save(expected);
+        //Assert
+        assertEquals(expected, actual);
         //Teardown
     }
 }
