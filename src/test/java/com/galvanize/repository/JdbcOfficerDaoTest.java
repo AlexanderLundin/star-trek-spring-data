@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,4 +59,23 @@ class JdbcOfficerDaoTest {
         assertEquals(expected, actual);
         //Teardown
     }
+
+    @Test
+    public void TestOfficerExistsById() {
+        //Setup
+        //Exercise
+        Optional<Object> actual = jdbcOfficerDao.officerExistsById(1);
+        //Assert
+        //Teardown
+    }
+
+    @Test
+    public void TestOfficerDoesNotExistById() {
+        //Setup
+        //Exercise
+        Optional<Object> actual = jdbcOfficerDao.officerExistsById(0);
+        //Assert
+        //Teardown
+    }
+
 }
