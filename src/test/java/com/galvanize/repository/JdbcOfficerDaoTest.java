@@ -81,4 +81,15 @@ class JdbcOfficerDaoTest {
         //Teardown
     }
 
+    @Test
+    public void TestFindOfficerById() {
+        //Setup
+        //Exercise
+        Optional<Object> actual = jdbcOfficerDao.findOfficerById(1L);
+        Officer officer = (Officer)actual.get();
+        //Assert
+        assertTrue(actual.isPresent());
+
+        //Teardown
+    }
 }

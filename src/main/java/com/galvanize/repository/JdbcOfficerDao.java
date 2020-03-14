@@ -20,6 +20,7 @@ public class JdbcOfficerDao {
     private final String COUNT_OFFICERS = "select count(*) from officers";
     private final String FETCH_ALL_OFFICERS = "select id, officer_rank, first_name, last_name from officers";
     private final String FETCH_OFFICER_BY_ID = "select * from officers where id = ?";
+    private final Officer officer = new Officer();
 
     public JdbcOfficerDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
@@ -39,13 +40,24 @@ public class JdbcOfficerDao {
             return true;
         }catch(EmptyResultDataAccessException e){
             return false;
-            //return Optional.empty();
         }
 
     }
 
+    public Optional<Object> findOfficerById(long id) {
+        officer.setId(id);
+        Object [] array = new Object[]{id};
+        try{
+            return Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID, array, new OfficerMapper()));
+
+        }catch(EmptyResultDataAccessException e){
+            return Optional.empty();
+        }
+
+    }
 
 }
+
 
 class OfficerMapper implements RowMapper {
 
