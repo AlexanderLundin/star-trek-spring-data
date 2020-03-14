@@ -64,8 +64,9 @@ class JdbcOfficerDaoTest {
     public void TestOfficerExistsById() {
         //Setup
         //Exercise
-        Optional<Object> actual = jdbcOfficerDao.officerExistsById(1);
+        boolean actual = jdbcOfficerDao.officerExistsById(1);
         //Assert
+        assertTrue(actual);
         //Teardown
     }
 
@@ -73,8 +74,10 @@ class JdbcOfficerDaoTest {
     public void TestOfficerDoesNotExistById() {
         //Setup
         //Exercise
-        Optional<Object> actual = jdbcOfficerDao.officerExistsById(0);
+        //Optional<Object> actual = jdbcOfficerDao.officerExistsById(0);
+        boolean actual = jdbcOfficerDao.officerExistsById(0);
         //Assert
+        assertFalse(actual);
         //Teardown
     }
 
