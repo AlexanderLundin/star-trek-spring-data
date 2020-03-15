@@ -1,22 +1,32 @@
 package com.galvanize.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "officers", schema = "star_trek")
 public class Officer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Rank rank;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Rank officer_rank;
+    @Column(nullable = false, name = "first_name")
     private String first;
+    @Column(nullable = false, name = "last_name")
     private String last;
 
     public Officer(){}
 
-    public Officer(Long id, Rank rank, String first, String last) {
+    public Officer(Long id, Rank officer_rank, String first, String last) {
         this.id = id;
-        this.rank = rank;
+        this.officer_rank = officer_rank;
         this.first = first;
         this.last = last;
     }
 
-    public Officer(Rank rank, String first, String last) {
-        this.rank = rank;
+    public Officer(Rank officer_rank, String first, String last) {
+        this.officer_rank = officer_rank;
         this.first = first;
         this.last = last;
     }
@@ -30,11 +40,11 @@ public class Officer {
     }
 
     public Rank getRank() {
-        return rank;
+        return officer_rank;
     }
 
     public void setRank(Rank rank) {
-        this.rank = rank;
+        this.officer_rank = rank;
     }
 
     public String getFirst() {
@@ -55,7 +65,7 @@ public class Officer {
 
     @Override
     public String toString(){
-        String string = this.id + this.first + this.last + this.rank;
+        String string = this.id + this.first + this.last + this.officer_rank;
         return string;
     }
 }
