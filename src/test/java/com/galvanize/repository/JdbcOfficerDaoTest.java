@@ -39,6 +39,23 @@ class JdbcOfficerDaoTest {
         //Teardown
     }
 
+    //CREATE
+
+    @Test
+    public void TestSaveOfficerToDB() {
+        //Setup
+        Officer expected = new Officer(6L, Rank.COMMANDER, "Spock", "");
+        //Exercise
+        Officer actual = jdbcOfficerDao.save(expected);
+        //Assert
+        assertEquals(expected, actual);
+        //Teardown
+    }
+
+
+    //READ
+
+
     @Test
     public void TestCountOfficers() {
         //Setup
@@ -95,16 +112,9 @@ class JdbcOfficerDaoTest {
         //Teardown
     }
 
-    @Test
-    public void TestSaveOfficerToDB() {
-        //Setup
-        Officer expected = new Officer(6L, Rank.COMMANDER, "Spock", "");
-        //Exercise
-        Officer actual = jdbcOfficerDao.save(expected);
-        //Assert
-        assertEquals(expected, actual);
-        //Teardown
-    }
+
+    // DELETE
+
 
     @Test
     public void TestDeleteOfficerThatExists() {
