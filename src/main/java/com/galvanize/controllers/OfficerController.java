@@ -55,4 +55,10 @@ public class OfficerController {
         return jpaOfficerDao.updateRankByID(id, rank);
     }
 
+    // DELETE
+    @DeleteMapping("/officers/{id}")
+    public void JBDCDeleteOfficerByID( @PathVariable Long id){
+        jdbcOfficerDao.delete(id);
+    }
+
 }

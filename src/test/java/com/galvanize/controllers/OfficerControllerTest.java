@@ -105,4 +105,15 @@ class OfficerControllerTest {
                 .andExpect(content().string(containsString(Rank.ENSIGN.toString())));
         //Teardown
     }
+
+    @Test
+    public void TestDeleteOfficerByID() throws Exception {
+        //Setup
+        String url = "/officers/1/";
+        //Exercise and Assert
+        mvc.perform(delete(url))
+                .andDo(print())
+                .andExpect(status().isOk());
+        //Teardown
+    }
 }
