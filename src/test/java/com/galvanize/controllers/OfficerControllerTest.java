@@ -46,6 +46,27 @@ class OfficerControllerTest {
         controller = new OfficerController(jdbcTemplate, jpaOfficerDao);
     }
 
+
+    // CREATE
+
+
+    @Test
+    void TestPostOfficer() throws Exception {
+        String body = "{\"id\":\"7\",\"rank\":\""+ Rank.ENSIGN +"\",\"first\":\"new\",\"last\":\"officer\"}";
+        mvc.perform(post("/officers")
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.first").value("new"));
+    }
+
+
+    //READ
+
+
     @Test
     public void TestGetAllOfficers() throws Exception {
         //Setup
@@ -81,18 +102,9 @@ class OfficerControllerTest {
         //Teardown
     }
 
-    @Test
-    void TestPostOfficer() throws Exception {
-        String body = "{\"id\":\"7\",\"rank\":\""+ Rank.ENSIGN +"\",\"first\":\"new\",\"last\":\"officer\"}";
-        mvc.perform(post("/officers")
-                .content(body)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-        )
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$.first").value("new"));
-    }
+
+    //UPDATE
+
 
     @Test
     void TestPatchOfficerRank() throws Exception {
@@ -106,6 +118,10 @@ class OfficerControllerTest {
         //Teardown
     }
 
+
+    //DELETE
+
+    
     @Test
     public void TestDeleteOfficerByID() throws Exception {
         //Setup
