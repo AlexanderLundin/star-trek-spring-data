@@ -69,6 +69,15 @@ public class JpaOfficerDao implements OfficerDao {
         return officer;
     }
 
+    public void deleteById(long id) {
+        //Find managed Entity reference
+        Officer officer = entityManager.find(Officer.class, id);
+        //Call remove method to remove the entity
+        if(officer != null){
+            entityManager.remove(officer);
+        }
+    }
+
     // required by interface contract
 
     @Override

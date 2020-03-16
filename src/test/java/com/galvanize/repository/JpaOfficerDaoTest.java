@@ -90,5 +90,14 @@ class JpaOfficerDAOTest{
         //Teardown
     }
 
-
+    @Test
+    public void TestDeleteByID() {
+        //Setup
+        //Exercise
+        dao.deleteById(1L);
+        Officer actual = dao.findById(1L);
+        //Assert
+        assertNull(actual);
+        //Teardown
+    }
 }
