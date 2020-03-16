@@ -48,4 +48,26 @@ class OfficerControllerTest {
         //Teardown
     }
 
+    @Test
+    public void TestGetOfficerByID() throws Exception {
+        //Setup
+        String url = "/officers/2";
+        //Exercise and Assert
+        mvc.perform(get(url))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Picard")));
+        //Teardown
+    }
+
+    @Test
+    public void TestGetOfficerByIDInvalid() throws Exception {
+        //Setup
+        String url = "/officers/0";
+        //Exercise and Assert
+        mvc.perform(get(url))
+                .andDo(print())
+                .andExpect(status().isOk());
+        //Teardown
+    }
 }
