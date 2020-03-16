@@ -31,12 +31,12 @@ class JpaOfficerDAOTest{
     private JdbcTemplate template;
 
     @Test
-    public void count() throws Exception {
+    public void TestCount() throws Exception {
         assertEquals(5, dao.count());
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void TestFindAll() throws Exception {
         List<String> expected = Arrays.asList("Picard", "Sisko", "Janeway", "Archer", "Kirk");
         List<String> actual = dao.findAll().stream()
                 .map(Officer::getLast)
@@ -44,15 +44,38 @@ class JpaOfficerDAOTest{
         assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
+
     @Test
-    public void existsById() throws Exception {
-        template.query("select id from officers", (rs, num) -> rs.getLong("id"))
-                .forEach(id -> assertTrue(dao.existsById(id)));
+    public void TestExistsByIdValid() throws Exception {
+        boolean actual = dao.existsById(1L);
+        assertTrue(actual);
     }
 
     @Test
-    public void existsByIdInvalid() throws Exception {
+    public void TestExistsByIdInvalid() throws Exception {
         boolean actual = dao.existsById(999L);
         assertFalse(actual);
+    }
+
+    @Test
+    public void TestFindByID() {
+        //Setup
+        long expected = 2L;
+        //Exercise
+        Officer actual = dao.findById(expected);
+        //Assert
+        assertNotNull(actual.getId());
+        //Teardown
+    }
+
+    @Test
+    public void TestFindByIDInvalid() {
+        //Setup
+        long expected = 999L;
+        //Exercise
+        Officer actual = dao.findById(expected);
+        //Assert
+        assertNull(actual);
+        //Teardown
     }
 }
