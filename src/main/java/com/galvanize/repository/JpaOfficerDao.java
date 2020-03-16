@@ -1,6 +1,7 @@
 package com.galvanize.repository;
 
 import com.galvanize.entities.Officer;
+import com.galvanize.entities.Rank;
 import com.sun.xml.bind.v2.model.core.ID;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
@@ -61,6 +62,13 @@ public class JpaOfficerDao implements OfficerDao {
         }catch(javax.persistence.NoResultException e){
             return null;
         }
+    }
+
+    public Officer updateRankByID (long id, Rank rank){
+        Officer officer = entityManager.find(Officer.class, id);
+        officer.setRank(rank);
+        entityManager.merge(officer);
+        return officer;
     }
 
     @Override
