@@ -35,6 +35,25 @@ class JpaOfficerDAOTest{
         assertEquals(5, dao.count());
     }
 
+
+    //CREATE
+
+
+    @Test
+    public void TestSave() {
+        //Setup
+        Officer expected = new Officer(8L, Rank.COMMANDER, "Spock", "Man");
+        //Exercise
+        Officer actual = dao.save(expected);
+        //Assert
+        assertEquals(expected.getFirst(), actual.getFirst());
+        //Teardown
+    }
+
+
+    //READ
+
+
     @Test
     public void TestFindAll() throws Exception {
         List<String> expected = Arrays.asList("Picard", "Sisko", "Janeway", "Archer", "Kirk");
@@ -79,16 +98,9 @@ class JpaOfficerDAOTest{
         //Teardown
     }
 
-    @Test
-    public void TestSave() {
-        //Setup
-        Officer expected = new Officer(8L, Rank.COMMANDER, "Spock", "Man");
-        //Exercise
-        Officer actual = dao.save(expected);
-        //Assert
-        assertEquals(expected.getFirst(), actual.getFirst());
-        //Teardown
-    }
+
+    //UPDATE
+
 
     @Test
     public void TestDeleteByID() {
