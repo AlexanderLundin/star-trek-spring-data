@@ -22,10 +22,11 @@ public class JpaOfficerDao implements OfficerDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final String JAP_FIND_ALL_FROM_OFFICER_TABLE = "select o from Officer o";
 
     @Override
     public List<Officer> findAll() {
-        TypedQuery<Officer> query = entityManager.createQuery("select o from Officer o", Officer.class);
+        TypedQuery<Officer> query = entityManager.createQuery(JAP_FIND_ALL_FROM_OFFICER_TABLE, Officer.class);
         List<Officer> results = query.getResultList();
         return results;
     }
