@@ -2,6 +2,7 @@ package com.galvanize.repository;
 
 import com.galvanize.entities.Officer;
 import com.sun.xml.bind.v2.model.core.ID;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ public class JpaOfficerDao implements OfficerDao {
 
     private final String JPA_FIND_ALL_FROM_OFFICER_TABLE = "select o from Officer o";
     private final String JPA_COUNT_ALL_FROM_OFFICER_TABLE = "select count(*) from Officer";
+    private final String JPA_FIND_OFFICER_BY_ID = "SELECT p FROM Officer p WHERE p.id = :id";
 
     @Override
     public long count() {
@@ -39,6 +41,18 @@ public class JpaOfficerDao implements OfficerDao {
         return results;
     }
 
+    public boolean existsById(long id) {
+        TypedQuery<Officer> query = entityManager.createQuery(JPA_FIND_OFFICER_BY_ID, Officer.class);
+        try{
+            Officer officer = query.getSingleResult();
+            return true;
+        }catch(java.lang.IllegalArgumentException e){
+            return false;
+        }
+    }
+
+    // required by interface contract
+
     @Override
     public List<Officer> findAll(Sort sort) {
         return null;
@@ -53,8 +67,6 @@ public class JpaOfficerDao implements OfficerDao {
     public List<Officer> findAllById(Iterable<Integer> integers) {
         return null;
     }
-
-
 
     @Override
     public void deleteById(Integer integer) {
@@ -97,9 +109,7 @@ public class JpaOfficerDao implements OfficerDao {
         return false;
     }
 
-    public boolean existsById(long id) {
-        return false;
-    }
+
 
     @Override
     public void flush() {
