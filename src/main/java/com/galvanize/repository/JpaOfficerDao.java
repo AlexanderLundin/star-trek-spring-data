@@ -22,19 +22,19 @@ public class JpaOfficerDao implements OfficerDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private final String JAP_FIND_ALL_FROM_OFFICER_TABLE = "select o from Officer o";
-    private final String JAP_COUNT_ALL_FROM_OFFICER_TABLE = "select count(*) from Officer";
+    private final String JPA_FIND_ALL_FROM_OFFICER_TABLE = "select o from Officer o";
+    private final String JPA_COUNT_ALL_FROM_OFFICER_TABLE = "select count(*) from Officer";
 
     @Override
     public long count() {
-        TypedQuery<Long> query = entityManager.createQuery(JAP_COUNT_ALL_FROM_OFFICER_TABLE, Long.class);
+        TypedQuery<Long> query = entityManager.createQuery(JPA_COUNT_ALL_FROM_OFFICER_TABLE, Long.class);
         long result = query.getSingleResult();
         return result;
     }
 
     @Override
     public List<Officer> findAll() {
-        TypedQuery<Officer> query = entityManager.createQuery(JAP_FIND_ALL_FROM_OFFICER_TABLE, Officer.class);
+        TypedQuery<Officer> query = entityManager.createQuery(JPA_FIND_ALL_FROM_OFFICER_TABLE, Officer.class);
         List<Officer> results = query.getResultList();
         return results;
     }
