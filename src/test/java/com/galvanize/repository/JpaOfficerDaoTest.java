@@ -31,6 +31,11 @@ class JpaOfficerDAOTest{
     private JdbcTemplate template;
 
     @Test
+    public void count() throws Exception {
+        assertEquals(5, dao.count());
+    }
+
+    @Test
     public void findAll() throws Exception {
         List<String> expected = Arrays.asList("Picard", "Sisko", "Janeway", "Archer", "Kirk");
         List<String> actual = dao.findAll().stream()

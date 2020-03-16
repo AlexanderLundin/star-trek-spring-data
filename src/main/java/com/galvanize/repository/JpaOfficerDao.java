@@ -23,6 +23,14 @@ public class JpaOfficerDao implements OfficerDao {
     private EntityManager entityManager;
 
     private final String JAP_FIND_ALL_FROM_OFFICER_TABLE = "select o from Officer o";
+    private final String JAP_COUNT_ALL_FROM_OFFICER_TABLE = "select count(*) from Officer";
+
+    @Override
+    public long count() {
+        TypedQuery<Long> query = entityManager.createQuery(JAP_COUNT_ALL_FROM_OFFICER_TABLE, Long.class);
+        long result = query.getSingleResult();
+        return result;
+    }
 
     @Override
     public List<Officer> findAll() {
@@ -46,10 +54,7 @@ public class JpaOfficerDao implements OfficerDao {
         return null;
     }
 
-    @Override
-    public long count() {
-        return 0L;
-    }
+
 
     @Override
     public void deleteById(Integer integer) {
