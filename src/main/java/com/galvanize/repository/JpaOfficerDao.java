@@ -43,11 +43,23 @@ public class JpaOfficerDao implements OfficerDao {
 
     public boolean existsById(long id) {
         TypedQuery<Officer> query = entityManager.createQuery(JPA_FIND_OFFICER_BY_ID, Officer.class);
+        query.setParameter("id", id);
         try{
             Officer officer = query.getSingleResult();
             return true;
-        }catch(java.lang.IllegalArgumentException e){
+        }catch(javax.persistence.NoResultException e){
             return false;
+        }
+    }
+
+    public Officer findById(long id) {
+        TypedQuery<Officer> query = entityManager.createQuery(JPA_FIND_OFFICER_BY_ID, Officer.class);
+        query.setParameter("id", id);
+        try{
+            Officer officer = query.getSingleResult();
+            return officer;
+        }catch(javax.persistence.NoResultException e){
+            return null;
         }
     }
 
@@ -100,16 +112,10 @@ public class JpaOfficerDao implements OfficerDao {
         return null;
     }
 
-    public Optional<Officer> findById2(long id) {
-        return null;
-    }
-
     @Override
     public boolean existsById(Integer integer) {
         return false;
     }
-
-
 
     @Override
     public void flush() {
