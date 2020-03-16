@@ -21,13 +21,11 @@ public class JdbcOfficerDao {
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert insertOfficer;
     private final Officer officer = new Officer();
-
+    // DB query strings
     private final String COUNT_OFFICERS = "select count(*) from officers";
     private final String FETCH_ALL_OFFICERS = "select id, officer_rank, first_name, last_name from officers";
     private final String FETCH_OFFICER_BY_ID = "select * from officers where id = ?";
     private final String DELETE_OFFICER_BY_ID = "delete from officers where id = ?";
-
-
 
 
     public JdbcOfficerDao(JdbcTemplate jdbcTemplate){
@@ -36,6 +34,22 @@ public class JdbcOfficerDao {
                 .withTableName("officers")
                 .usingGeneratedKeyColumns("id");
     }
+
+
+    //CREATE
+    public Officer save(Officer officer) {
+        Map<String, Object> fields = new HashMap<>();
+        fields.put("officer_rank", officer.getRank());
+        fields.put("first_name", officer.getFirst());
+        fields.put("last_name", officer.getLast());
+
+        long id = insertOfficer.executeAndReturnKey(fields).longValue();
+        officer.setId(id);
+
+        return officer;
+    }
+
+    //READ
 
     public int countOfficers() {
         return jdbcTemplate.queryForObject(COUNT_OFFICERS, Integer.class);
@@ -52,7 +66,6 @@ public class JdbcOfficerDao {
         }catch(EmptyResultDataAccessException e){
             return false;
         }
-
     }
 
     public Optional<Object> findOfficerById(long id) {
@@ -67,26 +80,19 @@ public class JdbcOfficerDao {
 
     }
 
-    public Officer save(Officer officer) {
-        Map<String, Object> fields = new HashMap<>();
-        fields.put("officer_rank", officer.getRank());
-        fields.put("first_name", officer.getFirst());
-        fields.put("last_name", officer.getLast());
 
-        long id = insertOfficer.executeAndReturnKey(fields).longValue();
-        officer.setId(id);
+    //UPDATE
 
-        return officer;
-    }
+    //DELETE
+
 
     public void delete(long id) {
         jdbcTemplate.update(DELETE_OFFICER_BY_ID, id);
     }
 
-
 }
 
-
+//class to map db query returns to officer objects
 class OfficerMapper implements RowMapper {
 
     @Override
