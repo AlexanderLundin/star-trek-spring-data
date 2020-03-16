@@ -31,6 +31,19 @@ public class OfficerController {
         this.jpaOfficerDao = jpaOfficerDao;
     }
 
+
+    //CREATE
+
+
+    @PostMapping("/officers")
+    public Officer JDBCPostOfficer(@RequestBody Officer officer){
+        return jdbcOfficerDao.save(officer);
+    }
+
+
+    //READ
+
+
     @GetMapping("/officers")
     public List<Officer> JDBCGetAllOfficers() {
         List<Officer> officerList = jdbcOfficerDao.findAllOfficers();
@@ -43,19 +56,19 @@ public class OfficerController {
         return officer;
     }
 
-    // CREATE
-    @PostMapping("/officers")
-    public Officer JDBCPostOfficer(@RequestBody Officer officer){
-        return jdbcOfficerDao.save(officer);
-    }
 
     //UPDATE
+
+
     @PatchMapping("/officers/{id}/{rank}")
     public Officer JPAPatchOfficerRank(@PathVariable Long id, @PathVariable Rank rank){
         return jpaOfficerDao.updateRankByID(id, rank);
     }
 
+
     // DELETE
+
+
     @DeleteMapping("/officers/{id}")
     public void JBDCDeleteOfficerByID( @PathVariable Long id){
         jdbcOfficerDao.delete(id);
