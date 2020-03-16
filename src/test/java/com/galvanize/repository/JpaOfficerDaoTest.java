@@ -41,8 +41,18 @@ class JpaOfficerDAOTest{
         List<String> actual = dao.findAll().stream()
                 .map(Officer::getLast)
                 .collect(Collectors.toList());
-        Assertions.assertThat(actual)
-                .containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
+    @Test
+    public void existsById() throws Exception {
+        template.query("select id from officers", (rs, num) -> rs.getLong("id"))
+                .forEach(id -> assertTrue(dao.existsById(id)));
+    }
+
+    @Test
+    public void existsByIdInvalid() throws Exception {
+        boolean actual = dao.existsById(999L);
+        assertFalse(actual);
+    }
 }
