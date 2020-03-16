@@ -1,6 +1,7 @@
 package com.galvanize.repository;
 
 import com.galvanize.entities.Officer;
+import com.galvanize.entities.Rank;
 import com.sun.xml.bind.v2.model.core.ID;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
@@ -22,10 +23,22 @@ import java.util.Optional;
 public class JpaOfficerDao implements OfficerDao {
     @PersistenceContext
     private EntityManager entityManager;
-
+    //db query strings
     private final String JPA_FIND_ALL_FROM_OFFICER_TABLE = "select o from Officer o";
     private final String JPA_COUNT_ALL_FROM_OFFICER_TABLE = "select count(*) from Officer";
     private final String JPA_FIND_OFFICER_BY_ID = "SELECT p FROM Officer p WHERE p.id = :id";
+
+
+    //CREATE
+    @Override
+    public <S extends Officer> S save(S entity) {
+        S officer = entityManager.merge(entity);
+        return officer;
+    }
+
+
+    //READ
+
 
     @Override
     public long count() {
@@ -63,11 +76,20 @@ public class JpaOfficerDao implements OfficerDao {
         }
     }
 
-    @Override
-    public <S extends Officer> S save(S entity) {
-        S officer = entityManager.merge(entity);
+
+    //UPDATE
+
+
+    public Officer updateRankByID (long id, Rank rank){
+        Officer officer = entityManager.find(Officer.class, id);
+        officer.setRank(rank);
+        entityManager.merge(officer);
         return officer;
     }
+
+
+    //DELETE
+
 
     public void deleteById(long id) {
         //Find managed Entity reference
