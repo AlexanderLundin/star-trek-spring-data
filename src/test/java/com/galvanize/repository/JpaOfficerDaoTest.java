@@ -78,4 +78,17 @@ class JpaOfficerDAOTest{
         assertNull(actual);
         //Teardown
     }
+
+    @Test
+    public void TestSave() {
+        //Setup
+        Officer expected = new Officer(8L, Rank.COMMANDER, "Spock", "Man");
+        //Exercise
+        Officer actual = dao.save(expected);
+        //Assert
+        assertEquals(expected.getFirst(), actual.getFirst());
+        //Teardown
+    }
+
+
 }
