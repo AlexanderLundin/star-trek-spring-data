@@ -63,6 +63,12 @@ public class JpaOfficerDao implements OfficerDao {
         }
     }
 
+    @Override
+    public <S extends Officer> S save(S entity) {
+        S officer = entityManager.merge(entity);
+        return officer;
+    }
+
     // required by interface contract
 
     @Override
@@ -97,10 +103,7 @@ public class JpaOfficerDao implements OfficerDao {
     public void deleteAll() {
     }
 
-    @Override
-    public <S extends Officer> S save(S entity) {
-        return null;
-    }
+
 
     @Override
     public <S extends Officer> List<S> saveAll(Iterable<S> entities) {
