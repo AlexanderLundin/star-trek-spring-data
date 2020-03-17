@@ -4,6 +4,7 @@ import com.galvanize.entities.Officer;
 import com.galvanize.entities.Rank;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+// rlw - unused imports (Code / Optimize Imports)
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,7 @@ public class JdbcOfficerDao {
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert insertOfficer;
     private final Officer officer = new Officer();
+    // rlw - nice touch here!
     // DB query strings
     private final String COUNT_OFFICERS = "select count(*) from officers";
     private final String FETCH_ALL_OFFICERS = "select id, officer_rank, first_name, last_name from officers";
@@ -55,24 +57,40 @@ public class JdbcOfficerDao {
         return jdbcTemplate.queryForObject(COUNT_OFFICERS, Integer.class);
     }
 
+    // rlw - You should be returning hard class here.  Nobody likes to figure out what type the object is.  The compiler
+    // will make sure that you have the right stuff :)
     public List<Officer> findAllOfficers() {
-        return jdbcTemplate.query(FETCH_ALL_OFFICERS, new OfficerMapper());
+        // rlw - again, use lambda here
+        return jdbcTemplate.query(FETCH_ALL_OFFICERS,
+                 (rs, rowNum) -> new Officer(rs.getLong("id"),
+                        Rank.valueOf(rs.getString("officer_rank")),
+                        rs.getString("first_name"), rs.getString("last_name")));
     }
 
     public boolean officerExistsById(long id) {
         try{
-            Optional<Object> officer = Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID, new Object[] { id }, new OfficerMapper()));
-            return true;
+            // rlw - wrong query here.  A select all is an expensive query.
+//            Optional<Object> officer = Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID, new Object[] { id }, new OfficerMapper()));
+//            return true;
+            return jdbcTemplate.queryForObject("select 1 from officers where id = ?", Boolean.class, id);
         }catch(EmptyResultDataAccessException e){
             return false;
         }
     }
 
-    public Optional<Object> findOfficerById(long id) {
-        officer.setId(id);
-        Object [] array = new Object[]{id};
+    public Optional<Officer> findOfficerById(long id) {
+        // rlw - not required
+//        officer.setId(id);
+//        Object [] array = new Object[]{id};
         try{
-            return Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID, array, new OfficerMapper()));
+            // rlw - should use lambda here!
+//            return Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID, array, new OfficerMapper()));
+            return Optional.ofNullable(jdbcTemplate.queryForObject(FETCH_OFFICER_BY_ID,
+                    (rs, rowNum) -> new Officer(rs.getLong("id"),
+                            Rank.valueOf(rs.getString("officer_rank")),
+                            rs.getString("first_name"),
+                            rs.getString("last_name")),
+                    id));
 
         }catch(EmptyResultDataAccessException e){
             return Optional.empty();
@@ -92,17 +110,18 @@ public class JdbcOfficerDao {
 
 }
 
+// rlw - Should use a lambda for this - see above...
 //class to map db query returns to officer objects
-class OfficerMapper implements RowMapper {
-
-    @Override
-    public Officer mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Officer officer = new Officer();
-        officer.setId((long) rs.getInt("id"));
-        officer.setRank(Rank.valueOf(rs.getString("officer_rank")));
-        officer.setFirst(rs.getString("first_name"));
-        officer.setLast(rs.getString("last_name"));
-        return officer;
-    }
-
-}
+//class OfficerMapper implements RowMapper {
+//
+//    @Override
+//    public Officer mapRow(ResultSet rs, int rowNum) throws SQLException {
+//        Officer officer = new Officer();
+//        officer.setId((long) rs.getInt("id"));
+//        officer.setRank(Rank.valueOf(rs.getString("officer_rank")));
+//        officer.setFirst(rs.getString("first_name"));
+//        officer.setLast(rs.getString("last_name"));
+//        return officer;
+//    }
+//
+//}

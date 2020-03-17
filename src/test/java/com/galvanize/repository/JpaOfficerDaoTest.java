@@ -39,6 +39,7 @@ class JpaOfficerDAOTest{
     //CREATE
 
 
+    //rlw - Method names should begin with a lowercase letter
     @Test
     public void TestSave() {
         //Setup
@@ -60,6 +61,7 @@ class JpaOfficerDAOTest{
         List<String> actual = dao.findAll().stream()
                 .map(Officer::getLast)
                 .collect(Collectors.toList());
+        //rlw - Nice Touch here
         assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 

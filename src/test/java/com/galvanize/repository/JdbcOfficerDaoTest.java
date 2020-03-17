@@ -24,6 +24,7 @@ class JdbcOfficerDaoTest {
     JdbcOfficerDao jdbcOfficerDao;
 
     @BeforeEach
+    // rlw - again, method names should begin with lower case letter
     public void Setup() {
         //Setup
        jdbcOfficerDao = new JdbcOfficerDao(jdbcTemplate);
@@ -106,7 +107,7 @@ class JdbcOfficerDaoTest {
         //Setup
         long id = 1L;
         //Exercise
-        Optional<Object> actual = jdbcOfficerDao.findOfficerById(id);
+        Optional<Officer> actual = jdbcOfficerDao.findOfficerById(id);
         //Assert
         assertTrue(actual.isPresent());
         Officer officer = (Officer)actual.get();

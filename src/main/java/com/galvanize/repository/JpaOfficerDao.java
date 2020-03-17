@@ -19,6 +19,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
+// rlw - This should be an interface that extends JpaRepository<Officer, Long>, then you would not have to provide any implementations.
 @Repository
 public class JpaOfficerDao implements OfficerDao {
     @PersistenceContext

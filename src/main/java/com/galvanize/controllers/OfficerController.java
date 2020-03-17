@@ -51,8 +51,8 @@ public class OfficerController {
     }
 
     @GetMapping("/officers/{id}")
-    public Optional<Object> JDBCGetOfficerByID(@PathVariable Long id){
-        Optional<Object> officer = jdbcOfficerDao.findOfficerById(id);
+    public Optional<Officer> JDBCGetOfficerByID(@PathVariable Long id){
+        Optional<Officer> officer = jdbcOfficerDao.findOfficerById(id);
         return officer;
     }
 
