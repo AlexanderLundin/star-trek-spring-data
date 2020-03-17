@@ -1,5 +1,5 @@
 package com.galvanize.controllers;
-
+// rlw - unused imports (code/Optimize Imports)
 import com.galvanize.entities.Officer;
 import com.galvanize.entities.Rank;
 import com.galvanize.repository.JdbcOfficerDao;
@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
+// rlw - Clean up your unused imports befor submitting (from the menu 'code/optimize imports')
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,18 +32,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 class OfficerControllerTest {
+    // rlw - Watch your spacing on things like this.  Major elements of code should have a new line between them
     @Autowired
     MockMvc mvc;
+    // rlw - should be a new empty line here
+    // rlw - jdbcTemplate is never used - should not be here
     @Autowired
     JdbcTemplate jdbcTemplate;
+    // rlw - new nine here
+    // rlw -
     OfficerController controller;
 
+    // rlw - jpaOfficerDao is never used.  Should be removed
     JpaOfficerDao jpaOfficerDao;
 
     @BeforeEach
     public void Setup() {
+        // rlw - jpaOfficerDao is never used.  Should be removed
         //Setup
         jpaOfficerDao = new JpaOfficerDao();
+        // rlw - this is never used.  Also, wrong way to instantiate.  Should be autowired
         controller = new OfficerController(jdbcTemplate, jpaOfficerDao);
     }
 
