@@ -1,20 +1,42 @@
 package com.galvanize.controllers;
 
+import com.galvanize.repository.JdbcOfficerDao;
+import com.galvanize.repository.JpaOfficerDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class HomeController {
 
+    private JdbcOfficerDao jdbcOfficerDao;
+    private JpaOfficerDao jpaOfficerDao;
+
     @Value("${spring.application.name}")
     String appName;
 
+    public HomeController(JdbcTemplate jdbcTemplate, JpaOfficerDao jpaOfficerDao){
+        this.jdbcOfficerDao = new JdbcOfficerDao(jdbcTemplate);
+        this.jpaOfficerDao = jpaOfficerDao;
+    }
+
+    @RequestMapping("/")
+    public ModelAndView redirectWithUsingRedirectPrefix(ModelMap model) {
+        return new ModelAndView("redirect:/home", model);
+    }
+
+
+
     @RequestMapping("/home")
-    public Model ShowHomeTemplate(Model model){
+    public Model showHomeTemplate(Model model){
         model.addAttribute("appName", appName);
+        model.addAttribute("officers", jpaOfficerDao.findAll());
         return model;
     }
 }

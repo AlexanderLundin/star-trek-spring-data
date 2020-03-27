@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,6 +40,24 @@ public class OfficerController {
     @PostMapping("/officers")
     public Officer JDBCPostOfficer(@RequestBody Officer officer){
         return jdbcOfficerDao.save(officer);
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/officers", params = {"first", "last", "rank"})
+    public RedirectView officerAdd(@RequestParam String first,
+                                @RequestParam String last, @RequestParam String rank, Model model) {
+        Officer newOfficer = new Officer();
+        newOfficer.setFirst(first);
+        newOfficer.setLast(last);
+        Rank doesRankExist = Rank.getIfPresent(rank);
+        if (doesRankExist != null){
+            newOfficer.setRank(Rank.valueOf(rank));
+        }else{
+            newOfficer.setRank(Rank.ENSIGN);
+        }
+        jdbcOfficerDao.save(newOfficer);
+        model.addAttribute("officer", newOfficer);
+        return new RedirectView("/officers/" + newOfficer.getId());
     }
 
 

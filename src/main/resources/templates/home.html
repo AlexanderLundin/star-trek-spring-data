@@ -4,5 +4,36 @@
 <body>
 <h1>Hello !</h1>
 <p>Welcome to <span th:text="${appName}">Our App</span></p>
+<title>officers database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h1>officers</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Skills</th>
+        <th></th>
+    </tr>
+    <tr th:each="officer : ${officers}">
+        <td th:text="${officer.first + ' ' + officer.last + ' ' + officer.rank}"></td>
+        <td>
+            <a th:href="@{/officers/{id}(id=${officer.id})}">view</a>
+        </td>
+    </tr>
+</table>
+<hr/>
+<form th:action="@{/officers}" method="post" enctype="multipart/form-data">
+    <div>
+        First name: <input name="first" />
+    </div>
+    <div>
+        Last name: <input name="last" />
+    </div>
+    <div>
+        Rank: <input name="rank" />
+    </div>
+    <div>
+        <input type="submit" value="Create officer" name="button"/>
+    </div>
+</form>
 </body>
 </html>
