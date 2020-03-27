@@ -3,6 +3,7 @@ Spring RESTful API for TV show Star Trek
 
 # Hosted on AWS
 View this link for the production copy of this application:
+
 http://startrek-env.eba-yvaab2p3.us-east-2.elasticbeanstalk.com
 
 # Stack used
