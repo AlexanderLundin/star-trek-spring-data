@@ -29,6 +29,8 @@ dependencies {
     // required for Elastic Beanstalk
     // Amazon RDS
     runtimeOnly 'mysql:mysql-connector-java'
+    // required for Thymeleaf templates
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
