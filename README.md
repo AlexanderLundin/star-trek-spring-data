@@ -8,16 +8,18 @@ http://startrek-env.eba-yvaab2p3.us-east-2.elasticbeanstalk.com
 
 # Stack used
 
-Cloud Hosting
+## Cloud Hosting
 AWS Elastic Beanstalk
 
-Framework
+## Framework
 Spring (Boot, Web, Data, MySQL, JBDC, Jpa, Google Gauava, Dev)
 
-Back-end
+## Back-end
 MySQL
+
 JPA
+
 JBDC
 
-Front-End
+## Front-End
 Thymeleaf html
