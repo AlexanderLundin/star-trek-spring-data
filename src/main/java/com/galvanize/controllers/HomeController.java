@@ -2,7 +2,6 @@ package com.galvanize.controllers;
 
 import com.galvanize.services.OfficerService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +21,13 @@ public class HomeController {
     }
 
     @RequestMapping("/")
-    public ModelAndView redirectWithUsingRedirectPrefix(ModelMap model) {
+    public ModelAndView redirectHomeToHomePage(ModelMap model) {
         return new ModelAndView("redirect:/home", model);
     }
 
 
     @RequestMapping("/home")
-    public Model showHomeTemplate(Model model){
+    public Model showHomePage(Model model){
         model.addAttribute("appName", appName);
         model.addAttribute("officers", officerService.findAll());
         return model;

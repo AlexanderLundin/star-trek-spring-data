@@ -2,14 +2,12 @@ package com.galvanize.controllers;
 
 import com.galvanize.entities.Officer;
 import com.galvanize.entities.Rank;
-import com.galvanize.repositories.JpaOfficerDao;
 import com.galvanize.services.OfficerService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController

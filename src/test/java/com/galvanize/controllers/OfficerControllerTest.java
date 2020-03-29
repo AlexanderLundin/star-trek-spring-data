@@ -1,10 +1,8 @@
 package com.galvanize.controllers;
-// rlw - unused imports (code/Optimize Imports)
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galvanize.entities.Officer;
 import com.galvanize.entities.Rank;
-import com.galvanize.repositories.JpaOfficerDao;
 import com.galvanize.services.OfficerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,15 +16,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.transaction.Transactional;
-
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
