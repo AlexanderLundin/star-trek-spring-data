@@ -3,7 +3,7 @@ package com.galvanize.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "officers", schema = "star_trek")
+@Table(name = "officers")
 public class Officer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

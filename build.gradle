@@ -32,6 +32,7 @@ dependencies {
     // required for Thymeleaf templates
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     // required for guava
+    testCompile group: 'com.h2database', name: 'h2'
     compile group: 'com.google.guava', name: 'guava', version: '23.5-jre' //or 23.5-android for the Android flavor
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
