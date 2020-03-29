@@ -15,9 +15,17 @@ public class OfficerService {
         this.jpaDao = jpaDao;
     }
 
+
+    // CREATE
+
+
     public Officer save (Officer officer){
         return jpaDao.save(officer);
     }
+
+
+    // READ
+
 
     public List<Officer> findAll() {
         return jpaDao.findAll();
@@ -31,4 +39,31 @@ public class OfficerService {
         }
 
     }
+
+
+    // UPDATE
+
+
+    public Officer updateById(Long id, Officer officer) {
+        if (jpaDao.existsById(id)){
+            return jpaDao.save(officer);
+        }else {
+            throw new RuntimeException ("Officer not found");
+        }
+    }
+
+
+    // DELETE
+
+
+    public void deleteById(Long id) {
+        if (jpaDao.existsById(id)){
+            jpaDao.deleteById(id);
+        }else {
+            throw new RuntimeException ("Officer not found");
+        }
+    }
+
+
+
 }

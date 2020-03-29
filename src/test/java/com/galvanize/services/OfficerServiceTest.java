@@ -44,7 +44,7 @@ class OfficerServiceTest {
     }
 
 
-    //CREATE ,  covered by setup
+    // CREATE ,  covered by setup
 
 
     // READ
@@ -69,7 +69,38 @@ class OfficerServiceTest {
         //Exercise
         Officer actual = officerService.findById(officer.getId());
         //Assert
-        assertEquals(expected, actual);
+        assertEquals(expected.hashCode(), actual.hashCode());
+        //Teardown
+    }
+
+
+    // UPDATE
+
+    @Test
+    public void testUpdateOfficerById() {
+        //Setup
+        officer.setFirst("New");
+        officer.setLast("Officer");
+        officer.setRank(Rank.ENSIGN);
+        Officer expected = officer;
+        //Exercise
+        Officer actual = officerService.updateById(officer.getId(), officer);
+        //Assert
+        assertEquals(expected.hashCode(), actual.hashCode());
+        assertEquals(expected.getLast(), actual.getLast());
+        //Teardown
+    }
+
+
+    // DELETE
+
+    @Test
+    public void testDeleteOfficerById() {
+        //Exercise
+        officerService.deleteById(officer.getId());
+        Officer actual = officerService.findById(officer.getId());
+        //Assert
+        assertNull(actual);
         //Teardown
     }
 }
