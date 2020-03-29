@@ -27,13 +27,13 @@ public class OfficerController {
 
 
     @PostMapping("/officers")
-    public Officer JDBCPostOfficer(@RequestBody Officer officer){
+    public Officer postOfficer(@RequestBody Officer officer){
         return officerService.save(officer);
     }
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/officers", params = {"first", "last", "rank"})
-    public RedirectView officerAdd(@RequestParam String first,
+    public RedirectView postOfficerWithPathVariables(@RequestParam String first,
                                 @RequestParam String last, @RequestParam String rank, Model model) {
         Officer newOfficer = new Officer();
         newOfficer.setFirst(first);
@@ -54,13 +54,13 @@ public class OfficerController {
 
 
     @GetMapping("/officers")
-    public List<Officer> JDBCGetAllOfficers() {
+    public List<Officer> getAllOfficers() {
         List<Officer> officerList = officerService.findAll();
         return officerList;
     }
 
     @GetMapping("/officers/{id}")
-    public Officer JDBCGetOfficerByID(@PathVariable Long id){
+    public Officer getOfficerById(@PathVariable Long id){
         Officer officer = officerService.findById(id);
         return officer;
     }
@@ -70,7 +70,7 @@ public class OfficerController {
 
 
     @PatchMapping("/officers/{id}")
-    public Officer JPAPatchOfficerRank(@PathVariable Long id, @RequestBody Officer officer){
+    public Officer updateOfficerById(@PathVariable Long id, @RequestBody Officer officer){
         return officerService.updateById(id, officer);
     }
 
