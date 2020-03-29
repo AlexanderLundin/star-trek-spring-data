@@ -1,8 +1,9 @@
 package com.galvanize.controllers;
 
-import com.galvanize.repositories.JdbcOfficerDao;
+import com.galvanize.services.OfficerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,13 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class HomeController {
 
-    private JdbcOfficerDao jdbcOfficerDao;
+    OfficerService officerService;
 
     @Value("${spring.application.name}")
     String appName;
 
-    public HomeController(JdbcTemplate jdbcTemplate){
-        this.jdbcOfficerDao = new JdbcOfficerDao(jdbcTemplate);
+    public HomeController (OfficerService officerService){
+        this.officerService = officerService;
     }
 
     @RequestMapping("/")
@@ -26,11 +27,10 @@ public class HomeController {
     }
 
 
-
-//    @RequestMapping("/home")
-//    public Model showHomeTemplate(Model model){
-//        model.addAttribute("appName", appName);
-//        model.addAttribute("officers", jpaOfficerDao.findAll());
-//        return model;
-//    }
+    @RequestMapping("/home")
+    public Model showHomeTemplate(Model model){
+        model.addAttribute("appName", appName);
+        model.addAttribute("officers", officerService.findAll());
+        return model;
+    }
 }

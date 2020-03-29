@@ -24,10 +24,6 @@ class OfficerServiceTest {
 
 
     @Autowired
-    JpaOfficerDao jpaDao;
-
-
-    @Autowired
     OfficerService officerService;
 
 
