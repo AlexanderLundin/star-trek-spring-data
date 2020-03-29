@@ -22,4 +22,13 @@ public class OfficerService {
     public List<Officer> findAll() {
         return jpaDao.findAll();
     }
+
+    public Officer findById(Long id) {
+        if (jpaDao.existsById(id)){
+            return jpaDao.findById(id).get();
+        }else{
+            return null;
+        }
+
+    }
 }

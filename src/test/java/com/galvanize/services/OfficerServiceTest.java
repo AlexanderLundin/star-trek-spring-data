@@ -49,7 +49,7 @@ class OfficerServiceTest {
 
     // READ
 
-    
+
     @Test
     public void testFindAllOfficers() {
         //Setup
@@ -59,6 +59,17 @@ class OfficerServiceTest {
         int actual = officers.size();
         //Assert
         assertNotEquals(notExpected, actual);
+        //Teardown
+    }
+
+    @Test
+    public void testFindOfficerById() {
+        //Setup
+        Officer expected = officer;
+        //Exercise
+        Officer actual = officerService.findById(officer.getId());
+        //Assert
+        assertEquals(expected, actual);
         //Teardown
     }
 }
