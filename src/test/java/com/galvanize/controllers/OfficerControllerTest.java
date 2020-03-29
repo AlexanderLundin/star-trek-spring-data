@@ -23,8 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -53,12 +52,14 @@ class OfficerControllerTest {
     private String first = "James II";
     private String last = "Kirk";
     private Rank rank = Rank.COMMANDER;
+    private long id;
 
     @BeforeEach
     public void setup() {
         //Setup
         officer1 = new Officer(rank, first, last);
-        officerService.save(officer1);
+        officer1 = officerService.save(officer1);
+        id = officer1.getId();
     }
 
 
@@ -79,7 +80,7 @@ class OfficerControllerTest {
         String contentAsString = result.getResponse().getContentAsString();
         Officer officer = objectMapper.readValue(contentAsString, Officer.class);
         //Assert
-        assertEquals(Rank.ENSIGN, officer.getRank());
+        assertEquals(Rank.COMMANDER, officer.getRank());
         //Teardown
     }
 
@@ -108,12 +109,16 @@ class OfficerControllerTest {
     @Test
     public void TestGetOfficerByID() throws Exception {
         //Setup
-        String url = "/officers/2";
+        String url = "/officers/" + id;
         //Exercise and Assert
-        mvc.perform(get(url))
+        ResultActions resultActions = mvc.perform(get(url))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Picard")));
+                .andExpect(status().isOk());
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        Officer officer = objectMapper.readValue(contentAsString, Officer.class);
+        //Assert
+        assertNotNull(officer);
         //Teardown
     }
 
@@ -136,7 +141,7 @@ class OfficerControllerTest {
     void TestPatchOfficer() throws Exception {
         //Setup
         String jsonInString = objectMapper.writeValueAsString(officer1);
-        String url = "/officers/1";
+        String url = "/officers/" + id;
         //Exercise and Assert
         ResultActions resultActions = mvc.perform(patch(url)
                 .content(jsonInString)

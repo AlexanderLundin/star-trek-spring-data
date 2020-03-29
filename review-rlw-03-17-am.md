@@ -8,7 +8,7 @@ shell from the project root)...
 ```
 $ git update-index --chmod=+x gradlew
 ```
-- Check your package naming.  There is a wierd package in test/java com.galvanize.repository.***JpaOfficerDaoTest.java***.JpaOfficerDAOTest
+- Check your package naming.  There is a wierd package in test/java com.galvanize.repositories.***JpaOfficerDaoTest.java***.JpaOfficerDAOTest
     - Due to the anonymous class in the file.  
     - should have been implemented with  an anonymous inner class, OR, the better option would have been to use a lambda (see code)
     - The pre work has a very good section on lambdas.  It may help.
